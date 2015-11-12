@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+  margin: 0;
+}
+
+path.line {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+
+}
+    
+.play {
+  fill: none;
+  stroke: #666;
+  stroke-width: 10px;
+    opacity: 0.6;
+}
+  
+.major-line {
+  fill: none;
+  stroke: white;
+  stroke-width: 10px;
+}
+
+
+path.area {
+  fill: #e7e7e7;
+}
+
+    .dots {
+        stroke: #f00;
+        fill: #f00;
+    }
+    
+.norm {
+  fill: #e7e7e7;
+} 
+    
+.grid .tick {
+    stroke: white;
+    opacity: 0.7;
+}
+.grid path {
+      stroke-width: 0;
+}
+    
+.background {
+  fill: #a7a7a7;
+}    
+ 
+    
+.axis {
+  shape-rendering: crispEdges;
+}
+
+.x.axis line {
+  stroke: #fff;
+}
+
+.x.axis .minor {
+  stroke-opacity: .5;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.y.axis line, .y.axis path {
+  fill: none;
+  stroke: #000;
+}
+
+</style>
+<body>
+<script src="d3.min.js"></script>
+<script>
+
+var margin = {top: 80, right: 80, bottom: 80, left: 80},
+    width = 500 - margin.left - margin.right,
+    height = 800 - margin.top - margin.bottom;
+
+var norm = [20,22];    
+var dataset = [[22,4],[21,-20],[24,20],[23,-10],[22,4]];
+    
+var clickcount = 0;
+    
+var parse = d3.time.format("%b %Y").parse;
+
+// Scales and axes. Note the inverted domain for the y-scale: bigger is up!
+var x = d3.scale.linear().range([0, width]),
+    y = d3.scale.linear().range([height, 0]),
+    xAxis = d3.svg.axis().scale(x).ticks(6),
+    yAxis = d3.svg.axis().scale(y).ticks(8).orient("left");
+    
+    
+function make_x_axis() {        
+    return d3.svg.axis()
+        .scale(x)
+         .orient("bottom")
+         .ticks(8)
+}
+
+function make_y_axis() {        
+    return d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        .ticks(10)
+}
+
+// An area generator, for the light fill.
+var area = d3.svg.area()
+    .interpolate("monotone")
+    .x(function(d) { return x(d.date); })
+    .y0(height)
+    .y1(function(d) { return y(d.price); });
+
+// A line generator, for the dark stroke.
+var line = d3.svg.line()
+    .interpolate("monotone")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.price); });
+
+d3.csv("readme.csv", type, function(error, data) {
+
+  // Filter to one symbol; the S&P 500.
+  var values = data.filter(function(d) {
+    return d.symbol == "S&P 500";
+  });
+
+  // Compute the minimum and maximum date, and the maximum price.
+var xmin=17.5,xmax=24.5; 
+  x.domain([17.5, 24.5]);
+  y.domain([-25, 25]).nice();
+    
+
+
+  // Add an SVG element with the desired dimensions and margin.
+  var svg = d3.select("body").append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .on("click", click);
+    
+svg.append("rect")
+   .attr("class", "background")
+   .attr("y", y(25))
+   .attr("x", x(xmin))
+   .attr("height", y(-25)-y(25))
+   .attr("width",x(xmax)-x(xmin));
+    
+  svg.append("rect")
+   .attr("class", "norm")
+   .attr("y", y(25))
+   .attr("x", x(20))
+   .attr("height", y(-25)-y(25))
+   .attr("width",x(22)-x(20));
+    
+ 
+    
+svg.append("g")         
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + height + ")")
+        .call(make_x_axis()
+            .tickSize(-height, 0, 0)
+            .tickFormat("")
+        )
+
+svg.append("g")         
+    .attr("class", "grid")
+    .call(make_y_axis()
+        .tickSize(-width, 0, 0)
+        .tickFormat("")
+    )
+
+svg.append("line")
+   .attr("class", "major-line")
+   .attr("x1", x(21))
+   .attr("y1", y(25))
+   .attr("x2",x(21))
+   .attr("y2", y(-25));
+    
+svg.append("line")
+   .attr("class", "major-line")
+   .attr("x1", x(xmin))
+   .attr("y1", y(0))
+   .attr("x2",x(xmax))
+   .attr("y2", y(0));
+
+  // Add the clip path.
+  svg.append("clipPath")
+      .attr("id", "clip")
+    .append("rect")
+      .attr("width", width)
+      .attr("height", height);
+
+  // Add the area path.
+  svg.append("path")
+      .attr("class", "area")
+      .attr("clip-path", "url(#clip)")
+      .attr("d", area(values));
+
+  // Add the x-axis.
+  svg.append("g")
+      .attr("class", "y axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  // Add the y-axis.
+  svg.append("g")
+      .attr("class", "y axis")
+      .attr("transform", "translate(0,0)")
+      .call(yAxis);
+
+  // Add the line path.
+  svg.append("path")
+      .attr("class", "line")
+      .attr("clip-path", "url(#clip)")
+      .attr("d", line(values));
+
+  // Add a small label for the symbol name.
+  svg.append("text")
+      .attr("x", width - 6)
+      .attr("y", height - 6)
+      .style("text-anchor", "end")
+      .text("°C");
+    
+var poly = [(width/2)-30,(height/2)-50,(width/2)+50,(height/2),(width/2)-30,(height/2)+50];
+    
+svg.append("polygon")
+   .attr("class", "play")
+   .attr("points",poly.join(","));
+    
+svg.append("circle")
+    .attr("class", "play")
+   .attr("cx", width/2)
+   .attr("cy", height /2)
+   .attr("r", 90);
+    
+
+
+  // On click, update the x-axis.
+  function click() {
+      
+    clickcount += 1;
+      
+    console.log(clickcount);
+      
+    if (clickcount == 1){
+        var dots = svg.selectAll(".play").transition().style("opacity", "0");
+
+        svg.selectAll("circle")
+       .data(dataset)
+       .enter()
+       .append("circle")
+        .attr("class", "dots")
+       .attr("cx", function(d) {
+            return x(d[0]);
+       })
+       .attr("cy", function(d) {
+            return y(d[1]);
+       })
+       .attr("r", 10)
+       .attr("opacity", 0)
+       .transition()
+        .delay(function(d, i) {return i*300;})
+        .attr("opacity", 0.3).style("opacity","0.3");
+        ;
+    } else if (clickcount == 2){
+        svg.selectAll(".dots").transition().style("opacity","0");
+    } else if (clickcount == 3){
+        svg.selectAll(".dots").transition().style("opacity","0.3");
+        clickcount = 1;
+    } else {
+        svg.append("circle")
+        .attr("cx", width/2)
+        .attr("cy", height /2)
+        .attr("r", 50);
+        
+        clickcount = 0;
+    }
+      
+  }
+});
+
+// Parse dates and numbers. We assume values are sorted by date.
+function type(d) {
+  d.date = parse(d.date);
+  d.price = +d.price;
+  return d;
+}
+
+</script>
