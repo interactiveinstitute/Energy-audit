@@ -804,7 +804,63 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
             .attr("id","firstline")
             .attr('x', 30)
             .attr('dy', 0)            
-            .text("TODO: GUIDE TO INTERPRET DATA");
+            .text("Normalized data shows the");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr("id","firstline")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("average and the distrobution");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr("id","firstline")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("of readings instead of the actual");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr("id","firstline")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("meter points."); 
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr("id","firstline")
+            .attr('x', 30)
+            .attr('dy', 30)            
+            .text("There needs to be");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("enough points collected at each");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("outdoor temperatre intervall");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("in order for us to see how");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("the systems works at that temperature.");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("In this example there is no data for");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("temperatures above 7°C");
     
         text.transition().delay(500).duration(1000).style("opacity","1");
         
@@ -829,7 +885,22 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
             .attr("id","firstline")
             .attr('x', 30)
             .attr('dy', 0)            
-            .text("TODO: GUIDE2 TO INTERPRET DATA");
+            .text("In well adjusted heatng system the indoor temperature");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("will be the same regardless of out door temperature.");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 30)            
+            .text("Temperature from different appertments or different rooms");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("in the appartment will also be the same.");
             
             text.transition().delay(500).duration(1000).style("opacity","1");
         }
