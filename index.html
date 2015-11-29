@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+
+
 <style>
 
 body {
   font: 10px sans-serif;
+  margin: 0;
+}
+    
+.infotext {
+  font: 18px sans-serif;
+    text-align: center;
   margin: 0;
 }
 
@@ -18,7 +26,7 @@ path.line {
   fill: none;
   stroke: #666;
   stroke-width: 10px;
-    opacity: 0.6;
+    opacity: 0.0;
 }
   
 .major-line {
@@ -32,9 +40,19 @@ path.area {
   fill: #e7e7e7;
 }
 
-    .dots {
-        stroke: #f00;
-        fill: #f00;
+.dots {
+        stroke: #500;
+        fill: #500;
+    }
+    
+.distro {
+        stroke: #f50;
+        fill: #f50;
+    }
+    
+.series2 {
+        stroke: #0fa;
+        fill: #0fa;
     }
     
 .norm {
@@ -53,6 +71,10 @@ path.area {
   fill: #a7a7a7;
 }    
  
+.background2 {
+  fill: #f0f0f0;
+}    
+
     
 .axis {
   shape-rendering: crispEdges;
@@ -75,8 +97,53 @@ path.area {
   stroke: #000;
 }
 
+.menu {
+  background-color: orange  ;
+    width: 100vw;
+    height: 10vh;
+}
+    
+    .padding {
+  
+    width: 1500px;
+    height: 10px;
+}
+    
+.div2 {
+  position: absolute;
+  transform: rotate(-30deg);
+  -webkit-transform:rotate(30);
+ border-color: red;
+    border: 2px solid red;
+    border: true;
+    color: red;
+    font-size: "10px";
+    padding-left: 10px;
+    padding-right: 10px;
+    left:100px;
+    top:100px;
+}
+    
+#prot {
+        
+     font-size: 40px;   
+    }
+    
 </style>
+
 <body>
+    
+<div class="menu">
+    
+</div>
+<div class="padding">
+    
+</div>
+    
+<div class="div2">
+    <h1 id="prot">PROTOTYPE</h1>
+</div>
+    
 <script src="d3.min.js"></script>
 <script>
 
@@ -87,7 +154,7 @@ var margin = {top: 80, right: 80, bottom: 80, left: 80},
 var norm = [20,22];    
 var dataset = [[22,4],[21,-20],[24,20],[23,-10],[22,4]];
     
-var clickcount = 0;
+var scene = 0;
     
 var parse = d3.time.format("%b %Y").parse;
 
@@ -131,21 +198,170 @@ d3.csv("readme.csv", type, function(error, data) {
   var values = data.filter(function(d) {
     return d.symbol == "S&P 500";
   });
+    
+var parsedate = d3.time.format("%d/%m/%y %H:%M").parse; 
+    
+var data2 = [];
+    
+d3.csv("appartment.csv", function(data) {
+  data.forEach(function(d) {
+    d.Datum = parsedate(d.Datum);
+      
+    for (var property in d) {
+    if (d.hasOwnProperty(property)) {
+        d[property] = +d[property];
+        }
+    }  
+    //d["Vardagsrummet"] = +d["Vardagsrummet"];
+    //d["Min ute"] = +d["Min ute"];
+  });
+    
+  
+  data2 = data;
+});
 
+d3.csv("appartment2.csv", function(data) {
+  data.forEach(function(d) {
+    d.Datum = parsedate(d.Datum);
+      
+    for (var property in d) {
+    if (d.hasOwnProperty(property)) {
+        d[property] = +d[property];
+        }
+    } 
+      
+    //d["Vardagsrummet"] = +d["Vardagsrummet"];
+    //d["Min ute"] = +d["Min ute"];
+  });
+    
+  
+  data3 = data;
+});
+    
+    
+
+    
   // Compute the minimum and maximum date, and the maximum price.
 var xmin=17.5,xmax=24.5; 
   x.domain([17.5, 24.5]);
   y.domain([-25, 25]).nice();
     
+var padding = d3.select("body").append("svg")
+      .attr("width", 450)
+      .attr("height", height + margin.top + margin.bottom)
+    
+/////////Frame 0
+var svg0 = d3.select("body").append("svg")
+      .attr("width", 520)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g").on("click", next_info);
+    
+var hand = svg0.append("path")
+    .attr("d","M113.7,87c0.1-0.3,0.1-0.6-0.1-1c-0.2-0.5-0.4-0.9-0.5-1.4c-2.1-5.9-3.9-11.8-4.9-18c-0.2-1-0.4-2.1-0.9-2.9		c-0.7-1-1.7-1.9-2.7-2.7c-0.4-0.3-1-0.4-1.5-0.4c-1.3,0-1.5-0.1-1.7-1.4c0-0.1,0-0.2,0-0.3c-0.2-2.8,0-5.5,0.2-8.3		c0.2-2.5,0.1-5.1,0.1-7.7c0-2.8,0-5.7,0.1-8.5c0-1.6,0.3-3.2,0.3-4.8c0-1.1-0.3-2.2-0.3-3.4c-0.2-4.3-0.4-7.3-0.5-11.6		c-0.1-2.3-0.6-4.4-1.9-6.3c-0.9-1.3-2-2-3.5-2.2C95.4,6.1,95,6,94.7,6c-0.7,0-1.3,0-2,0c-2,0-3.2,1.6-4.3,3.2		c-0.3,0.5-0.5,1-0.7,1.5c-0.6,1-0.8,2.1-0.7,3.2c0.1,2.3,0.3,4.5,0.4,6.7c0.2,2.8,0.3,4.3,0.5,7.1c0,0.7,0,1.5-0.3,2.2		c-0.4,0.9-0.6,1.7-0.6,2.6c-0.1,3.8-0.2,7.6-0.4,11.4c0,1.1-0.1,2.2-0.2,3.3c-0.2,1.6-0.7,3-1.8,4.2c-0.6,0.7-1.4,0.8-2.2,0.6		c-1.5-0.4-3-0.9-4.2-2c-1-0.9-2.2-1.4-3.5-1.6c-2-0.2-3.8,0.2-5,2c-0.3,0.5-0.7,1-1.1,1.5c-1.2,1.5-2.9,2.4-4.7,3		c-0.2,0.1-0.5,0.1-0.7,0c-1.2-0.1-2.4-0.3-3.6-0.4c-2.4-0.3-4.5,0.2-6.2,2.1c-0.8,0.9-1.6,1.7-2.4,2.5c-1,1-2.2,1.6-3.7,1.4		c-0.6-0.1-1.4,0-2,0.2c-1.1,0.4-2.2,0.9-3.3,1.4c-2.1,1-3.6,2.7-4.2,5c-0.5,1.8-1,3.7-1.3,5.5c-0.4,2.2-0.7,4.4-1,6.6		c-0.2,2.3,0.1,4.6,0.5,6.8c0.1,0.6,0.2,0.8,0.5,0.9c1.2,4.6,2.1,8.4,2.7,10.9c1.4,6.1,2.1,9.8,4.3,15.2c0.2,0.4,0.3,0.7,0.4,1h0		c0,0,0,0,0,0c0.4,1.1,0.7,1.7,1,2.1c0.7,1.2,1.7,2.2,3.1,3.1c3.2,5.4,3.1,16.7,3.9,18.8c3.1,9,35.6,9.1,44.3-1.9		c4.2-5.3,0.5-15.3,2.9-26c4.1-3.5,9-8.7,13.4-15.8c1.5-2.3,1.6-4.7,1.6-4.7C114,88.5,113.8,87.6,113.7,87z")
+    .attr("class","hand")
+    .attr("transform", "translate(" + 220 + "," + 300 + ")")
+    .style("opacity",0)
+    .transition().duration(500)
+    .style("opacity",1)
+    .transition()
+    .attr("transform", "translate(" + 220 + "," + 260 + ")")
+    .transition()
+    .attr("transform", "translate(" + 220 + "," + 300 + ")")
+    .transition()
+    .attr("transform", "translate(" + 220 + "," + 260 + ")")
+    .transition()
+    .attr("transform", "translate(" + 220 + "," + 300 + ")")
+    .transition()
+    .attr("transform", "translate(" + 220 + "," + 260 + ")")
+    .transition()
+    .attr("transform", "translate(" + 220 + "," + 300 + ")");
+    
 
 
-  // Add an SVG element with the desired dimensions and margin.
+svg0.append("svg:image")
+           .attr("id","termometer")
+          .attr("xlink:href", "Termometer.jpg")
+          .attr("width", 200)
+          .attr("height", 250)
+          .attr("visibility", "hidden")
+        .attr("transform", "translate(" + 180 + "," + 200 + ")");
+
+svg0.append("text")
+      .attr("x", 370)
+      .attr("y", 480)
+      .attr("class", "infotext")
+      .attr("opacity",0)
+      .style("text-anchor", "end")
+      .text("Click to start tutorial!")
+      .transition().delay(500).duration(1000).style("opacity","1");    
+
+function next_info() {
+    
+    console.log("info click");
+    click();
+ }
+    
+    
+// Add an SVG element with the desired dimensions and margin.
   var svg = d3.select("body").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
+      
     .append("g")
+      .attr("opacity",0)
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .on("click", click);
+      .on("click", click);  
+    
+    
+var p1 = d3.select("body").append("svg")
+      .attr("width", 200)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g");    
+
+/////////////////
+    //Frame 3
+    
+/////////////////
+var svg2 = d3.select("body").append("svg")
+      .attr("width", 200)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g");
+    
+var xmin=17.5,xmax=24.5; 
+    
+svg2.append("rect")
+   .attr("class", "background2")
+   .attr("y", -200)
+   .attr("x", 0)
+   .attr("height", height+300)
+   .attr("width",200);
+    
+var datasets = [1,2,3,4];
+    
+svg2.attr("visibility","hidden");
+    
+svg2.selectAll("path")
+    .data(datasets)
+    .enter().append("path")
+    .attr("d", "M12.4,125.5c0.3-14,11.3-24.3,24.8-24.3	c13.5,0,24.5,10.3,24.8,24.3h10.2V37c0-19.1-15.5-34.7-34.6-35C18,1.7,2,18.3,2,37.9l0,87.6H12.4z")
+    .attr("stroke", "black")
+    .attr("stroke-width", 4)
+    .attr("transform", function(d,i){
+            return "translate(60,"+ ((i*150) + 50)+")";
+       }
+        )
+    .attr("fill", "none");
+
+svg2.append("text")
+      .attr("x", 130)
+      .attr("y", 30)
+      .style("text-anchor", "end")
+      .text("Your data sets");
+    
+    
+    
+  
+    
     
 svg.append("rect")
    .attr("class", "background")
@@ -226,7 +442,7 @@ svg.append("line")
   // Add a small label for the symbol name.
   svg.append("text")
       .attr("x", width - 6)
-      .attr("y", height - 6)
+      .attr("y", height + 16)
       .style("text-anchor", "end")
       .text("°C");
     
@@ -244,45 +460,454 @@ svg.append("circle")
     
 
 
+
+//Dist object 
+var DISTROBUTION = function (dist_xmin,dist_xmax,dist_ymin,dist_ymax,dist_xstep,dist_ystep)
+{
+    this.dist_xmin = dist_xmin;
+    this.dist_xmax = dist_xmax;
+    this.dist_ymin = dist_ymin;
+    this.dist_ymax = dist_ymax;
+    this.dist_xstep = dist_xstep;
+    this.dist_ystep = dist_ystep;
+    
+    this.fx = function (c) {
+        return (c * dist_xstep) + dist_xmin;    
+    };
+    
+    this.fy = function (r) {
+        return ((r+1) * dist_ystep) + dist_ymin;    
+    };
+    
+    this.processdata = function (data,xkey,ykey) {
+    
+        var dist_xmin = this.dist_xmin;
+        var dist_xmax = this.dist_xmax;
+        var dist_ymin = this.dist_ymin;
+        var dist_ymax = this.dist_ymax;
+        var dist_xmin = this.dist_xmin;
+        var dist_xstep = this.dist_xstep;
+        var dist_ystep = this.dist_ystep;
+
+        dx = ((dist_xmax-dist_xmin)/dist_xstep) ;
+        dy = ((dist_ymax-dist_ymin)/dist_ystep) ;
+        
+        console.log(dx,dy);
+
+        var m = new Array(dy);
+        
+        var avg = new Array(dy);
+        var avg_count = new Array(dy);
+        avg.fill(0);
+        avg_count.fill(0);
+        
+        for (var i = 0; i < dy; i++) {
+            m[i] = new Array(dx);  
+            m[i].fill(0);
+
+        }
+
+        for (var i = 0; i < data.length; i++) 
+        {    
+            var xi = Math.floor( (data[i][xkey] - dist_xmin) / dist_xstep ) ;
+            var yi = Math.floor( (data[i][ykey] - dist_ymin) / dist_ystep ) ;
+            
+            
+
+            //Check that data is not outside of matrix
+            if ( xi >= 0 && xi < dx && yi >= 0 && yi < dy)
+            {
+                    
+                    m[yi][xi] = m[yi][xi] +1; 
+                
+                    avg[yi] = avg[yi] + data[i][xkey];
+                    avg_count[yi] = avg_count[yi] +1;
+                
+            }
+
+        }
+        
+        this.avg = [];
+        for (var i = 0; i < dy; i++)
+        {
+            this.avg[i] = {"x":avg[i]/avg_count[i],"y":this.fy(i)}   
+        }
+        
+        console.log(this.avg);
+
+        return m;
+
+    }
+    
+    
+    this.linegenerator = d3.svg.line()
+                          .x(function(d) { return x(d.x); })
+                          .y(function(d) { return y(d.y); })
+                          .interpolate("linear");
+    this.linegenerator.defined(function(d) { return !isNaN(d.x); });
+    
+    this.plotpline = function()
+    {
+        return this.linegenerator(this.avg);   
+    }
+    
+    return this;
+    
+};
+    
+
+
+    
+    
+var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
+
+
+    
+    
+    
   // On click, update the x-axis.
   function click() {
       
-    clickcount += 1;
+        var all_data = data2.concat(data3);
       
-    console.log(clickcount);
       
-    if (clickcount == 1){
-        var dots = svg.selectAll(".play").transition().style("opacity", "0");
+        scene += 1;
+        console.log("scene" + scene);
+      
+        //Scene 1
+        if (scene == 1){
+            svg0.selectAll(".hand").transition().duration(500).style("opacity",0);   
+            svg0.selectAll(".infotext").transition().duration(500).style("opacity",0).text("");
+            
+            
+            svg0.selectAll("#termometer")
+                .style("opacity",0)
+                .attr("visibility","visible")
+                .transition().delay(1000).duration(1000).style("opacity",1);
+            
+            var text = svg0.append("svg:text")
+            .attr("x", 380)
+            .attr("y", 480)
+            .attr("class", "infotext")
+            .attr("opacity",0);
+            //.style("text-anchor", "end")
+            
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 100)
+            .attr('dy', 0)            
+            .text("An Energy Audit is done by comparing");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 110)
+            .attr('dy', 20)            
+            .text("indoor teperature of a building to the");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 120)
+            .attr('dy', 20)            
+            .text("outdoor temperature of a building");
+        
+            
+            text.transition().delay(1800).duration(1000).style("opacity","1");
+            
+            
+    
+            
+        }
+        else if (scene == 2)
+        {
+            svg0.selectAll(".infotext").transition().delay(20).duration(500).style("opacity",0);
+            
+            padding.transition().delay(1000).duration(1000).attr("width",0);
+            svg.transition().delay(2000).duration(1000).style("opacity",1)
+            
+            var text = svg0.append("svg:text")
+            .attr("x", 0)
+            .attr("y", 480)
+            .attr("class", "infotext")
+            .attr("opacity",0);
+            //.style("text-anchor", "end")
+            
+            ;
+            
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 120)
+            .attr('dy', 0)            
+            .text("In the graph to the right outdoor tempera- ");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 110)
+            .attr('dy', 20)            
+            .text("ture is on the y-axis and indoor temperature ");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 230)
+            .attr('dy', 20)            
+            .text("on the x-axis.")
+            text.append('svg:tspan')
+            .attr("opacity",0)
+            .attr("id","lastline")
+            .attr("class", "infotext")
+            .attr('x', 112)
+            .attr('dy', 30)            
+            .text("Click the play button to view recorded data.");
+            text.transition().delay(3500).duration(1000).style("opacity","1");
+            
+            svg0.selectAll("#lastline").transition().delay(7000).duration(1000).style("opacity","1");
+                           
+            var dots = svg.selectAll(".play").transition().delay(1500).style("opacity", "0.6");
+            
+        }
+        else if (scene == 3)
+        {
+            var dots = svg.selectAll(".play").transition().style("opacity", "0");
+            
+            svg0.selectAll(".infotext").transition().duration(1000).style("opacity","0");
+            
 
-        svg.selectAll("circle")
-       .data(dataset)
-       .enter()
-       .append("circle")
-        .attr("class", "dots")
-       .attr("cx", function(d) {
-            return x(d[0]);
-       })
-       .attr("cy", function(d) {
-            return y(d[1]);
-       })
-       .attr("r", 10)
-       .attr("opacity", 0)
-       .transition()
-        .delay(function(d, i) {return i*300;})
-        .attr("opacity", 0.3).style("opacity","0.3");
-        ;
-    } else if (clickcount == 2){
-        svg.selectAll(".dots").transition().style("opacity","0");
-    } else if (clickcount == 3){
-        svg.selectAll(".dots").transition().style("opacity","0.3");
-        clickcount = 1;
-    } else {
+            svg.selectAll("circle")
+           .data(all_data)
+           .enter()
+           .append("circle")
+            .attr("class", "dots")
+           .attr("cx", function(d) {
+                return x(d["Vardagsrummet"]);
+           })
+           .attr("cy", function(d) {
+                return y(d["Min ute"]);
+           })
+           .attr("r", 5)
+           .attr("opacity", 0).transition()
+            .delay(function(d, i) {return i*1.5;})
+            .attr("opacity", 0.01).style("opacity","0.01");
+
+
+            var dots = svg.selectAll(".play").transition().style("opacity", "0");
+            
+            
+            //TEXT
+            var text = svg0.append("svg:text")
+            .attr("x", 0)
+            .attr("y", 480)
+            .attr("class", "infotext")
+            .attr("opacity",0);
+            //.style("text-anchor", "end")
+            
+            ;
+            
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr("id","firstline")
+            .attr('x', 30)
+            .attr('dy', 0)            
+            .text("The data plotted consists of more than 14000 temperature");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 70)
+            .attr('dy', 20)            
+            .text("messurements collected during February - March");
+            text.append('svg:tspan')
+            .attr("opacity",0)
+            .attr("class", "infotext")
+            .attr("id","secondline")
+            .attr('x', 90)
+            .attr('dy', 30)            
+            .text("A lot of the meassurements where taken")
+            text.append('svg:tspan')
+            .attr("opacity",0)
+            .attr("class", "infotext")
+            .attr("id","secondline")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("when the outside temperatrue where around 0°C or -12°C.")
+            text.append('svg:tspan')
+            .attr("opacity",0)
+            .attr("class", "infotext")
+            .attr("id","secondline")
+            .attr('x', 50)
+            .attr('dy', 20)            
+            .text("To get a better view we need to normalize the data");
+            text.append('svg:tspan')
+            .attr("opacity",0)
+            .attr("class", "infotext")
+            .attr("id","thirdline")
+            .attr('x', 90)
+            .attr('dy', 40)            
+            .text("Click on the graph to normalize the data!");
+            
+            
+            text.transition().delay(2500).duration(1000).style("opacity","1");
+            svg0.selectAll("#secondline").transition().delay(6000).duration(1000).style("opacity","1");
+            svg0.selectAll("#thirdline").transition().delay(14000).duration(1000).style("opacity","1");
+            
+        
+        }
+        else if (scene == 4)
+        {
+            svg.selectAll(".dots").style("opacity","0");
+            svg.selectAll(".dots").style("visibility","hidden");
+            //svg.selectAll(".dots").transition().delay(500).style("opacity","0");
+            
+            svg0.selectAll(".infotext").transition().duration(1000).style("opacity","0");
+            svg0.selectAll(".infotext").transition().delay(2000).style("visibility","hidden");
+        
+            var dist = mydist.processdata(all_data,xkey="Vardagsrummet",ykey="Min ute")
+            dist.forEach(function(d){console.log(d);});
+        
+            dist.forEach(function (d,i) {
+
+
+                var py = y(mydist.fy(i));
+                var smax = Math.max.apply(Math,d) + 1;
+
+
+
+                svg.selectAll(".distrox")
+                .data(d)
+                .enter()
+                .append("rect")
+
+                .attr("class", function(d,i) {
+                return "distro distro" + i; })
+                .attr("x", function(d,i) {
+                return x(mydist.fx(i));})
+                .attr("y", py)
+                .attr("width", x(mydist.dist_xstep)-x(0) )  
+                .attr("height", y(0)-y(mydist.dist_ystep) )
+                .attr("opacity",function(d) {
+                return d/smax;})
+                .style("opacity",function(d) {
+                return d/smax;});
+
+            });
+
+            svg.append("path")
+                .attr("d", mydist.linegenerator(mydist.avg))
+                .attr("stroke", "blue")
+                .attr("stroke-width", 2)
+                .attr("fill", "none");
+        
+        
+        var text = svg0.append("svg:text")
+            .attr("x", 0)
+            .attr("y", 480)
+            .attr("class", "infotext")
+            .attr("opacity",0);
+            //.style("text-anchor", "end")
+            
+         
+            
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr("id","firstline")
+            .attr('x', 30)
+            .attr('dy', 0)            
+            .text("TODO: GUIDE TO INTERPRET DATA");
+    
+        text.transition().delay(500).duration(1000).style("opacity","1");
+        
+    }
+      
+        else if (scene == 5)
+        {
+            svg0.selectAll(".infotext").transition().duration(1000).style("opacity","0");
+            svg0.selectAll(".infotext").transition().delay(2000).style("visibility","hidden");
+            
+            var text = svg0.append("svg:text")
+            .attr("x", 0)
+            .attr("y", 480)
+            .attr("class", "infotext")
+            .attr("opacity",0);
+            //.style("text-anchor", "end")
+            
+            ;
+            
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr("id","firstline")
+            .attr('x', 30)
+            .attr('dy', 0)            
+            .text("TODO: GUIDE2 TO INTERPRET DATA");
+            
+            text.transition().delay(500).duration(1000).style("opacity","1");
+        }
+      
+        else if (scene == 6)
+        {
+            svg0.selectAll(".infotext").transition().duration(1000).style("opacity","0");
+            svg0.selectAll(".infotext").transition().delay(2000).style("visibility","hidden");
+            
+            svg0.selectAll("#termometer")
+                .transition().delay(1000).duration(1000).style("opacity",0);
+            
+            var text = svg0.append("svg:text")
+            .attr("x", 0)
+            .attr("y", 480)
+            .attr("class", "infotext")
+            .attr("opacity",0);
+            //.style("text-anchor", "end")
+            
+           
+            
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr("id","firstline")
+            .attr('x', 30)
+            .attr('dy', 0)            
+            .text("TODO: ABILITY TO SELECT APPARTMENTS");
+            
+            text.transition().delay(500).duration(1000).style("opacity","1");
+        }  
+        else if (scene == 7)
+        {
+            svg0.selectAll(".infotext").transition().duration(1000).style("opacity","0");
+            svg0.selectAll(".infotext").transition().delay(2000).style("visibility","hidden");
+            
+            var text = svg0.append("svg:text")
+            .attr("x", 0)
+            .attr("y", 480)
+            .attr("class", "infotext")
+            .attr("opacity",0);
+            //.style("text-anchor", "end")
+            
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr("id","firstline")
+            .attr('x', 30)
+            .attr('dy', 0)            
+            .text("TODO: ANALYSIS TOOLS");
+            
+            text.transition().delay(500).duration(1000).style("opacity","1");
+        }
+      
+        else if (scene == 8)
+        {
+            svg.selectAll(".dots").transition().duration(100).ease("cubic").style("opacity","0.01");
+        } 
+      
+        
+      else if (scene == 9)
+      {
+           svg.selectAll(".dots").style("opacity","0.01");
+           svg.selectAll(".distro").attr("visibility", "hidden");     
+      }
+      else if (scene == 10)
+      {
+          svg.selectAll(".dots").style("opacity","0");
+        svg.selectAll(".distro").attr("visibility", "visible"); 
+          
+          scene = 8;
+      }
+      
+      else {
         svg.append("circle")
         .attr("cx", width/2)
         .attr("cy", height /2)
         .attr("r", 50);
         
-        clickcount = 0;
+        scene = 0;
     }
       
   }
@@ -294,5 +919,16 @@ function type(d) {
   d.price = +d.price;
   return d;
 }
+    
 
+
+    
+ 
 </script>
+    
+    
+
+
+    
+    
+ 
