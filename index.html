@@ -712,7 +712,7 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
             .attr("id","firstline")
             .attr('x', 30)
             .attr('dy', 0)            
-            .text("The data plotted consists of more than 14000 temperature");
+            .text("The data plotted consists of more than 14 000 temperature");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 70)
@@ -878,7 +878,7 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
         text.transition().delay(500).duration(1000).style("opacity","1");
         
     }
-      
+     //Scene 5 a good system 
         else if (scene == 5)
         {
             svg0.selectAll(".infotext").transition().duration(1000).style("opacity","0");
@@ -907,36 +907,120 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 30)            
-            .text("Temperature from different appertments or different rooms");
+            .attr('dy', 20)            
+            .text("However some variation will always occur.");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
             .attr('dy', 20)            
-            .text("in the appartment will also be the same.");
+            .text("Typically there is a big variation in the range 0-4°C");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("Since otherparameters such as humidity and wind varies a lot");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("in this intervall. ");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr("id","firstline")
+            .attr('x', 30)
+            .attr('dy', 30)            
+            .text("In well adjusted heatng system the temperature");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("from different appertments or different rooms");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("in an appartment will also be the same.");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("in the next step you will be able to select");
+            text.append('svg:tspan')
+            .attr("class", "infotext")
+            .attr('x', 30)
+            .attr('dy', 20)            
+            .text("data form multiple appartments.");
             
             text.transition().delay(500).duration(1000).style("opacity","1");
             
-            svg.selectAll(".distro").transition().delay(2000).duration(1000).style("opacity","0");
-            svg.selectAll(".avg").transition().delay(2000).duration(1000).style("opacity","0");
+            //svg.selectAll(".distro").transition().duration(1000).style("opacity","0");
+            //svg.selectAll(".avg").transition().duration(1000).style("opacity","0");
             
-            svg.append("path")
+            var path1 = svg.append("path")
+                .attr("d", mydist.linegenerator(mydist.ideal_avg))
+                .attr("class", "ideal_dist")
+                .attr("stroke", "orange")
+                .attr("stroke-width", 20)   
+                .attr("opacity", 0.5)
+                //.style("opacity", 0)
+                .attr("fill", "none");
+            
+            var path2 = svg.append("path")
                 .attr("d", mydist.linegenerator(mydist.ideal_avg))
                 .attr("class", "ideal_avg")
                 .attr("stroke", "blue")
                 .attr("stroke-width", 2)
+                //.attr("opacity", 0)
+                //.style("opacity", 0)
                 .attr("fill", "none");
+            
+            
+            path1.transition()
+                .delay(1000).duration(1000).style("opacity", 0.5);
+            
+            path2.transition()
+                .delay(1000).duration(1000).style("opacity", 1);
+            
+            var totalLength1 = path1.node().getTotalLength();
+        
+
+            path1
+              .attr("stroke-dasharray", totalLength1 + " " + totalLength1)
+              .attr("stroke-dashoffset", totalLength1)
+              .transition()
+                .duration(2000)
+                .ease("linear")
+                .attr("stroke-dashoffset", 0);
+            
+            var totalLength2 = path2.node().getTotalLength();
+            
+            path2
+              .attr("stroke-dasharray", totalLength2 + " " + totalLength2)
+              .attr("stroke-dashoffset", totalLength2)
+              .transition()
+                .duration(2000)
+                .ease("linear")
+                .attr("stroke-dashoffset", 0);
+            
+            
+            
             
         
         }
       
+        //Multi select. 
         else if (scene == 6)
         {
-            svg0.selectAll(".infotext").transition().duration(1000).style("opacity","0");
+            svg0.selectAll(".infotext ").transition().duration(1000).style("opacity","0");
             svg0.selectAll(".infotext").transition().delay(2000).style("visibility","hidden");
             
             svg0.selectAll("#termometer")
-                .transition().delay(1000).duration(1000).style("opacity",0);
+                .transition().delay(500).duration(1000).style("opacity",0);
+            
+            
+            svg.selectAll(".ideal_dist").transition().duration(1000).style("opacity","0").style("visibility","hidden");
+            svg.selectAll(".ideal_avg").transition().duration(1000).style("opacity","0").style("visibility","hidden");
+            
             
             var text = svg0.append("svg:text")
             .attr("x", 0)
@@ -950,12 +1034,66 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr("id","firstline")
-            .attr('x', 30)
+            .attr('x', 40)
             .attr('dy', 0)            
-            .text("TODO: ABILITY TO SELECT APPARTMENTS");
+            .text("Click on the windows of the house to select data series.");
             
             text.transition().delay(500).duration(1000).style("opacity","1");
             
+            
+            
+            var rectangle = svg0.append("rect")
+                             .attr("x", 200)
+                             .attr("y", 200)
+                             .attr("width", 150)
+                             .attr("height", 200)
+                             .attr("fill", "black")
+                            .attr("opacity",0);
+            
+            var rectangle2 = svg0.append("rect")
+                             .attr("x", 260)
+                             .attr("y", 350)
+                             .attr("width", 30)
+                             .attr("height", 50)
+                             .attr("fill", "white")
+                            .attr("opacity",0);
+            
+            var datasets2 = [{"dist":svg.selectAll(".distro"),"avg":svg.selectAll(".avg")},1,2,3,4,5,6,7,8];
+            
+            var windows = svg0.selectAll(".win").data(datasets2)
+                .enter().append("rect")
+                             .attr("x", function(d,i) {return 213 + ((i%3)*45);})
+                             .attr("y", function(d,i) {return 210 + (Math.floor(i/3) *45);})
+                             .attr("width", 35)
+                             .attr("height", 25)
+                             .attr("fill", "white")
+                            .attr("class","win")
+                            .attr("opacity",0)
+                            .on("click", function(d) {
+                                console.log(d);
+                                var nextColor = this.style.fill == "yellow" ? "white" : "yellow"
+                                d3.select(this).style("fill", nextColor);
+                                if (typeof d != typeof 0 )
+                                {
+                                    if (nextColor == "yellow") {
+                                        d.avg.transition().duration(500).style("opacity","1").style("visibility","visible");
+                                        d.dist.transition().duration(500).style("visibility","visible");
+                                    }
+                                    else
+                                        {
+                                        d.avg.transition().duration(500).style("opacity","0").style("visibility","visible");
+                                        d.dist.transition().duration(500).style("visibility","hidden");
+                                        }
+                                }
+                            });
+            
+            
+            rectangle.transition().delay(1500).duration(1000).style("opacity","1");
+            rectangle2.transition().delay(1500).duration(100).style("opacity","1");
+            windows.transition().delay(1500).duration(100).style("opacity","1");
+            
+            svg.selectAll(".distro").transition().duration(1000).style("visibility","hidden");
+            svg.selectAll(".avg").transition().duration(1000).style("opacity","0");
             
             
         }  
