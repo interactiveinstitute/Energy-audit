@@ -50,6 +50,11 @@ path.area {
         fill: #f50;
     }
     
+.distrob {
+        stroke: #f50;
+        fill: #f50;
+    }
+    
 .series2 {
         stroke: #0fa;
         fill: #0fa;
@@ -831,7 +836,7 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 return d/smax;})
                 .style("opacity",function(d) {
                 return d/smax;})
-                .style("visible","false");
+                .style("visibility","hidden");
 
             });
 
@@ -841,7 +846,10 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 .attr("stroke", "blue")
                 .attr("stroke-width", 2)
                 .attr("fill", "none")
-            .style("visible","false");
+            .style("visibility","hidden");
+            
+            
+        //TEXT
         
         var text = svg0.append("svg:text")
             .attr("x", 0)
