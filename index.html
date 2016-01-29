@@ -55,6 +55,11 @@ path.area {
         fill: #f50;
     }
     
+.distroc {
+        stroke: #f50;
+        fill: #f50;
+    }
+    
 .series2 {
         stroke: #0fa;
         fill: #0fa;
@@ -849,6 +854,47 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
             .style("visibility","hidden");
             
             
+        //3
+        var dist2 = mydist.processdata(all_data,xkey="Sovrummet",ykey="Min ute")
+            //dist.forEach(function(d){console.log(d);});
+        
+            dist2.forEach(function (d,i) {
+
+
+                var py = y(mydist.fy(i));
+                var smax = Math.max.apply(Math,d) + 1;
+
+
+
+                svg.selectAll(".distrox")
+                .data(d)
+                .enter()
+                .append("rect")
+
+                .attr("class", function(d,i) {
+                return "distroc distrob" + i; })
+                .attr("x", function(d,i) {
+                return x(mydist.fx(i));})
+                .attr("y", py)
+                .attr("width", x(mydist.dist_xstep)-x(0) )  
+                .attr("height", y(0)-y(mydist.dist_ystep) )
+                .attr("opacity",function(d) {
+                return d/smax;})
+                .style("opacity",function(d) {
+                return d/smax;})
+                .style("visibility","hidden");
+
+            });
+
+            svg.append("path")
+                .attr("d", mydist.linegenerator(mydist.avg))
+                .attr("class", "avgc")
+                .attr("stroke", "blue")
+                .attr("stroke-width", 2)
+                .attr("fill", "none")
+            .style("visibility","hidden");
+            
+            
         //TEXT
         
         var text = svg0.append("svg:text")
@@ -1108,7 +1154,7 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
             
             
             
-            var datasets2 = [{"dist":svg.selectAll(".distro"),"avg":svg.selectAll(".avg")},{"dist":svg.selectAll(".distrob"),"avg":svg.selectAll(".avgb")},2,3,4,5,6,7,8];
+            var datasets2 = [{"dist":svg.selectAll(".distro"),"avg":svg.selectAll(".avg")},{"dist":svg.selectAll(".distrob"),"avg":svg.selectAll(".avgb")},{"dist":svg.selectAll(".distroc"),"avg":svg.selectAll(".avgc")},3,4,5,6,7,8];
             
             var windows = svg0.selectAll(".win").data(datasets2)
                 .enter().append("rect")
