@@ -366,7 +366,7 @@ svg2.append("text")
       .attr("x", 130)
       .attr("y", 30)
       .style("text-anchor", "end")
-      .text("Your data sets");
+      .text("Analyze");
     
     
     
@@ -1231,7 +1231,10 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
           svg.selectAll(".dots").style("opacity","0");
         svg.selectAll(".distro").attr("visibility", "visible"); 
           
-          scene = 8;
+          //Add tools
+          svg2.attr("visibility","visible");
+          
+          scene = 9;
       }
       
       else {
