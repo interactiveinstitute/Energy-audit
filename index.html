@@ -301,20 +301,23 @@ svg0.append("svg:image")
           .attr("visibility", "hidden")
         .attr("transform", "translate(" + 180 + "," + 200 + ")");
 
+svg0.append("rect")
+    .attr("x", 190)
+    .attr("y", 250)
+    .attr("width", 200)
+    .attr("height", 50);
+    
 svg0.append("text")
       .attr("x", 370)
-      .attr("y", 480)
+      .attr("y", 280)
       .attr("class", "infotext")
       .attr("opacity",0)
       .style("text-anchor", "end")
+.style("color":"white")
       .text("Click to start tutorial!")
       .transition().delay(500).duration(1000).style("opacity","1");    
     
-svg0.append("rect")
-    .attr("x", 300)
-    .attr("y", 440)
-    .attr("width", 50)
-    .attr("height", 100);
+
 
 function next_info() {
     
