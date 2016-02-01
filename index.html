@@ -306,6 +306,7 @@ svg0.append("rect")
     .attr("y", 250)
     .attr("width", 200)
     .attr("height", 50);
+    .attr("class", "infotextbox")
     
 svg0.append("text")
       .attr("x", 370)
@@ -313,7 +314,7 @@ svg0.append("text")
       .attr("class", "infotext")
       .attr("opacity",0)
       .style("text-anchor", "end")
-      .style("color","white")
+      .style("font-color","white")
       .text("Click to start tutorial!")
       .transition().delay(500).duration(1000).style("opacity","1");    
     
@@ -602,7 +603,7 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
         if (scene == 1){
             svg0.selectAll(".hand").transition().duration(500).style("opacity",0);   
             svg0.selectAll(".infotext").transition().duration(500).style("opacity",0).text("");
-            
+            svg0.selectAll(".infotextbox").transition().duration(500).style("opacity",0);
             
             svg0.selectAll("#termometer")
                 .style("opacity",0)
