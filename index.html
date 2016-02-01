@@ -309,6 +309,12 @@ svg0.append("text")
       .style("text-anchor", "end")
       .text("Click to start tutorial!")
       .transition().delay(500).duration(1000).style("opacity","1");    
+    
+svg0.append("rect")
+    .attr("x", 300)
+    .attr("y", 440)
+    .attr("width", 50)
+    .attr("height", 100);
 
 function next_info() {
     
@@ -655,12 +661,12 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
             .attr("class", "infotext")
             .attr('x', 110)
             .attr('dy', 20)            
-            .text("ture is on the y-axis and indoor temperature ");
+            .text("ture is on the vertical axis and indoor  ");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 230)
             .attr('dy', 20)            
-            .text("on the x-axis.")
+            .text("temperature on the horizontal axis.")
             text.append('svg:tspan')
             .attr("opacity",0)
             .attr("id","lastline")
@@ -722,7 +728,7 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
             .attr("class", "infotext")
             .attr('x', 70)
             .attr('dy', 20)            
-            .text("messurements collected during February - March");
+            .text("measurements collected during February - March");
             text.append('svg:tspan')
             .attr("opacity",0)
             .attr("class", "infotext")
