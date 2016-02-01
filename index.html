@@ -269,6 +269,22 @@ var svg0 = d3.select("body").append("svg")
     
 
     
+svg0.append("rect")
+    .attr("x", 190)
+    .attr("y", 250)
+    .attr("width", 200)
+    .attr("height", 50)
+    .attr("fill","grey")
+    .attr("class", "infotextbox");
+    
+svg0.append("text")
+      .attr("x", 370)
+      .attr("y", 280)
+      .attr("class", "infotext")
+      .attr("opacity",0)
+      .style("text-anchor", "end")
+      .text("Click to start tutorial!")
+      .transition().delay(500).duration(1000).style("opacity","1");  
     
     
 var hand = svg0.append("path")
@@ -301,23 +317,7 @@ svg0.append("svg:image")
           .attr("visibility", "hidden")
         .attr("transform", "translate(" + 180 + "," + 200 + ")");
 
-svg0.append("rect")
-    .attr("x", 190)
-    .attr("y", 250)
-    .attr("width", 200)
-    .attr("height", 50)
-    .attr("fill","grey")
-    .attr("class", "infotextbox");
-    
-svg0.append("text")
-      .attr("x", 370)
-      .attr("y", 280)
-      .attr("class", "infotext")
-      .attr("opacity",0)
-      .style("text-anchor", "end")
- 
-      .text("Click to start tutorial!")
-      .transition().delay(500).duration(1000).style("opacity","1");    
+  
     
 
 
