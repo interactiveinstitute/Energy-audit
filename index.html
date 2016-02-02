@@ -1241,6 +1241,8 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
           
           var panel = d3.xml("Sidpanel.svg", "image/svg+xml", function(error, xml) {
                 if (error) throw error;
+                console.log(xml.documentElement);
+                xml.width = 100;
                 document.body.appendChild(xml.documentElement);
             });
           
