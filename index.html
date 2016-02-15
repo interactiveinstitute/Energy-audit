@@ -8,7 +8,7 @@ body {
   font: 10px sans-serif;
   margin: 0;
 }
-    
+
 .infotext {
   font: 18px sans-serif;
     text-align: center;
@@ -21,14 +21,14 @@ path.line {
   stroke-width: 1.5px;
 
 }
-    
+
 .play {
   fill: none;
   stroke: #666;
   stroke-width: 10px;
     opacity: 0.0;
 }
-  
+
 .major-line {
   fill: none;
   stroke: white;
@@ -44,31 +44,31 @@ path.area {
         stroke: #500;
         fill: #500;
     }
-    
+
 .distro {
         stroke: #f50;
         fill: #f50;
     }
-    
+
 .distrob {
         stroke: #f50;
         fill: #f50;
     }
-    
+
 .distroc {
         stroke: #f50;
         fill: #f50;
     }
-    
+
 .series2 {
         stroke: #0fa;
         fill: #0fa;
     }
-    
+
 .norm {
   fill: #e7e7e7;
-} 
-    
+}
+
 .grid .tick {
     stroke: white;
     opacity: 0.7;
@@ -76,16 +76,16 @@ path.area {
 .grid path {
       stroke-width: 0;
 }
-    
+
 .background {
   fill: #a7a7a7;
-}    
- 
+}
+
 .background2 {
   fill: #f0f0f0;
-}    
+}
 
-    
+
 .axis {
   shape-rendering: crispEdges;
 }
@@ -112,13 +112,13 @@ path.area {
     width: 100vw;
     height: 10vh;
 }
-    
+
     .padding {
-  
+
     width: 1500px;
     height: 10px;
 }
-    
+
 .div2 {
   position: absolute;
   transform: rotate(-30deg);
@@ -133,27 +133,27 @@ path.area {
     left:100px;
     top:100px;
 }
-    
+
 #prot {
-        
-     font-size: 40px;   
+
+     font-size: 40px;
     }
-    
+
 </style>
 
 <body>
-    
+
 <div class="menu">
-    
+
 </div>
 <div class="padding">
-    
+
 </div>
-    
+
 <div class="div2">
     <h1 id="prot">PROTOTYPE</h1>
 </div>
-    
+
 <script src="d3.min.js"></script>
 <script>
 
@@ -161,11 +161,11 @@ var margin = {top: 80, right: 80, bottom: 80, left: 80},
     width = 500 - margin.left - margin.right,
     height = 800 - margin.top - margin.bottom;
 
-var norm = [20,22];    
+var norm = [20,22];
 var dataset = [[22,4],[21,-20],[24,20],[23,-10],[22,4]];
-    
+
 var scene = 0;
-    
+
 var parse = d3.time.format("%b %Y").parse;
 
 // Scales and axes. Note the inverted domain for the y-scale: bigger is up!
@@ -173,16 +173,16 @@ var x = d3.scale.linear().range([0, width]),
     y = d3.scale.linear().range([height, 0]),
     xAxis = d3.svg.axis().scale(x).ticks(6),
     yAxis = d3.svg.axis().scale(y).ticks(8).orient("left");
-    
-    
-function make_x_axis() {        
+
+
+function make_x_axis() {
     return d3.svg.axis()
         .scale(x)
          .orient("bottom")
          .ticks(8)
 }
 
-function make_y_axis() {        
+function make_y_axis() {
     return d3.svg.axis()
         .scale(y)
         .orient("left")
@@ -208,67 +208,67 @@ d3.csv("readme.csv", type, function(error, data) {
   var values = data.filter(function(d) {
     return d.symbol == "S&P 500";
   });
-    
-var parsedate = d3.time.format("%d/%m/%y %H:%M").parse; 
-    
+
+var parsedate = d3.time.format("%d/%m/%y %H:%M").parse;
+
 var data2 = [];
-    
+
 d3.csv("appartment.csv", function(data) {
   data.forEach(function(d) {
     d.Datum = parsedate(d.Datum);
-      
+
     for (var property in d) {
     if (d.hasOwnProperty(property)) {
         d[property] = +d[property];
         }
-    }  
+    }
     //d["Vardagsrummet"] = +d["Vardagsrummet"];
     //d["Min ute"] = +d["Min ute"];
   });
-    
-  
+
+
   data2 = data;
 });
 
 d3.csv("appartment2.csv", function(data) {
   data.forEach(function(d) {
     d.Datum = parsedate(d.Datum);
-      
+
     for (var property in d) {
     if (d.hasOwnProperty(property)) {
         d[property] = +d[property];
         }
-    } 
-      
+    }
+
     //d["Vardagsrummet"] = +d["Vardagsrummet"];
     //d["Min ute"] = +d["Min ute"];
   });
-    
-  
+
+
   data3 = data;
 });
-    
-    
 
-    
+
+
+
   // Compute the minimum and maximum date, and the maximum price.
-var xmin=17.5,xmax=24.5; 
+var xmin=17.5,xmax=24.5;
   x.domain([17.5, 24.5]);
   y.domain([-25, 25]).nice();
-    
+
 var padding = d3.select("body").append("svg")
       .attr("width", 450)
       .attr("height", height + margin.top + margin.bottom)
-    
+
 /////////Frame 0
 var svg0 = d3.select("body").append("svg")
       .attr("width", 520)
       .attr("height", height + margin.top + margin.bottom)
     .append("g").on("click", next_info);
-    
-    
 
-    
+
+
+
 svg0.append("rect")
     .attr("x", 190)
     .attr("y", 230)
@@ -276,16 +276,16 @@ svg0.append("rect")
     .attr("height", 50)
     .attr("fill","grey")
     .attr("class", "infotextbox");
-    
+
 svg0.append("text")
       .attr("x", 370)
       .attr("y", 260)
       .attr("class", "infotext")
       .attr("opacity",1)
       .style("text-anchor", "end")
-      .text("Click to start tutorial!");  
-    
-    
+      .text("Click to start tutorial!");
+
+
 var hand = svg0.append("path")
     .attr("d","M113.7,87c0.1-0.3,0.1-0.6-0.1-1c-0.2-0.5-0.4-0.9-0.5-1.4c-2.1-5.9-3.9-11.8-4.9-18c-0.2-1-0.4-2.1-0.9-2.9		c-0.7-1-1.7-1.9-2.7-2.7c-0.4-0.3-1-0.4-1.5-0.4c-1.3,0-1.5-0.1-1.7-1.4c0-0.1,0-0.2,0-0.3c-0.2-2.8,0-5.5,0.2-8.3		c0.2-2.5,0.1-5.1,0.1-7.7c0-2.8,0-5.7,0.1-8.5c0-1.6,0.3-3.2,0.3-4.8c0-1.1-0.3-2.2-0.3-3.4c-0.2-4.3-0.4-7.3-0.5-11.6		c-0.1-2.3-0.6-4.4-1.9-6.3c-0.9-1.3-2-2-3.5-2.2C95.4,6.1,95,6,94.7,6c-0.7,0-1.3,0-2,0c-2,0-3.2,1.6-4.3,3.2		c-0.3,0.5-0.5,1-0.7,1.5c-0.6,1-0.8,2.1-0.7,3.2c0.1,2.3,0.3,4.5,0.4,6.7c0.2,2.8,0.3,4.3,0.5,7.1c0,0.7,0,1.5-0.3,2.2		c-0.4,0.9-0.6,1.7-0.6,2.6c-0.1,3.8-0.2,7.6-0.4,11.4c0,1.1-0.1,2.2-0.2,3.3c-0.2,1.6-0.7,3-1.8,4.2c-0.6,0.7-1.4,0.8-2.2,0.6		c-1.5-0.4-3-0.9-4.2-2c-1-0.9-2.2-1.4-3.5-1.6c-2-0.2-3.8,0.2-5,2c-0.3,0.5-0.7,1-1.1,1.5c-1.2,1.5-2.9,2.4-4.7,3		c-0.2,0.1-0.5,0.1-0.7,0c-1.2-0.1-2.4-0.3-3.6-0.4c-2.4-0.3-4.5,0.2-6.2,2.1c-0.8,0.9-1.6,1.7-2.4,2.5c-1,1-2.2,1.6-3.7,1.4		c-0.6-0.1-1.4,0-2,0.2c-1.1,0.4-2.2,0.9-3.3,1.4c-2.1,1-3.6,2.7-4.2,5c-0.5,1.8-1,3.7-1.3,5.5c-0.4,2.2-0.7,4.4-1,6.6		c-0.2,2.3,0.1,4.6,0.5,6.8c0.1,0.6,0.2,0.8,0.5,0.9c1.2,4.6,2.1,8.4,2.7,10.9c1.4,6.1,2.1,9.8,4.3,15.2c0.2,0.4,0.3,0.7,0.4,1h0		c0,0,0,0,0,0c0.4,1.1,0.7,1.7,1,2.1c0.7,1.2,1.7,2.2,3.1,3.1c3.2,5.4,3.1,16.7,3.9,18.8c3.1,9,35.6,9.1,44.3-1.9		c4.2-5.3,0.5-15.3,2.9-26c4.1-3.5,9-8.7,13.4-15.8c1.5-2.3,1.6-4.7,1.6-4.7C114,88.5,113.8,87.6,113.7,87z")
     .attr("class","hand")
@@ -305,7 +305,7 @@ var hand = svg0.append("path")
     .attr("transform", "translate(" + 220 + "," + 260 + ")")
     .transition()
     .attr("transform", "translate(" + 220 + "," + 300 + ")");
-    
+
 
 
 svg0.append("svg:image")
@@ -316,55 +316,55 @@ svg0.append("svg:image")
           .attr("visibility", "hidden")
         .attr("transform", "translate(" + 180 + "," + 200 + ")");
 
-  
-    
+
+
 
 
 function next_info() {
-    
+
     console.log("info click");
     click();
  }
-    
-    
+
+
 // Add an SVG element with the desired dimensions and margin.
   var svg = d3.select("body").append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
-      
+
     .append("g")
       .attr("opacity",0)
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .on("click", click);  
-    
-    
+      .on("click", click);
+
+
 var p1 = d3.select("body").append("svg")
       .attr("width", 100)
       .attr("height", height + margin.top + margin.bottom)
-    .append("g");    
+    .append("g");
 
 /////////////////
     //Frame 3
-    
+
 /////////////////
 var svg2 = d3.select("body").append("svg")
-      .attr("width", 200)
+      .attr("width", 50)
       .attr("height", height + margin.top + margin.bottom)
     .append("g");
-    
-var xmin=17.5,xmax=24.5; 
-    
+
+var xmin=17.5,xmax=24.5;
+
 svg2.append("rect")
    .attr("class", "background2")
    .attr("y", -200)
    .attr("x", 0)
    .attr("height", height+300)
    .attr("width",200);
-    
-    
-    
+
+
+
 var datasets = [1,2,3,4];
-    
+
 svg2.attr("visibility","hidden");
 
 svg2.append("text")
@@ -372,29 +372,29 @@ svg2.append("text")
       .attr("y", 30)
       .style("text-anchor", "end")
       .text("Analyze");
-    
-    
-    
-  
-    
-    
+
+
+
+
+
+
 svg.append("rect")
    .attr("class", "background")
    .attr("y", y(25))
    .attr("x", x(xmin))
    .attr("height", y(-25)-y(25))
    .attr("width",x(xmax)-x(xmin));
-    
+
   svg.append("rect")
    .attr("class", "norm")
    .attr("y", y(25))
    .attr("x", x(20))
    .attr("height", y(-25)-y(25))
    .attr("width",x(22)-x(20));
-    
- 
-    
-svg.append("g")         
+
+
+
+svg.append("g")
         .attr("class", "grid")
         .attr("transform", "translate(0," + height + ")")
         .call(make_x_axis()
@@ -402,7 +402,7 @@ svg.append("g")
             .tickFormat("")
         )
 
-svg.append("g")         
+svg.append("g")
     .attr("class", "grid")
     .call(make_y_axis()
         .tickSize(-width, 0, 0)
@@ -415,7 +415,7 @@ svg.append("line")
    .attr("y1", y(25))
    .attr("x2",x(21))
    .attr("y2", y(-25));
-    
+
 svg.append("line")
    .attr("class", "major-line")
    .attr("x1", x(xmin))
@@ -460,23 +460,23 @@ svg.append("line")
       .attr("y", height + 16)
       .style("text-anchor", "end")
       .text("°C");
-    
+
 var poly = [(width/2)-30,(height/2)-50,(width/2)+50,(height/2),(width/2)-30,(height/2)+50];
-    
+
 svg.append("polygon")
    .attr("class", "play")
    .attr("points",poly.join(","));
-    
+
 svg.append("circle")
     .attr("class", "play")
    .attr("cx", width/2)
    .attr("cy", height /2)
    .attr("r", 90);
-    
 
 
 
-//Dist object 
+
+//Dist object
 var DISTROBUTION = function (dist_xmin,dist_xmax,dist_ymin,dist_ymax,dist_xstep,dist_ystep)
 {
     this.dist_xmin = dist_xmin;
@@ -485,17 +485,17 @@ var DISTROBUTION = function (dist_xmin,dist_xmax,dist_ymin,dist_ymax,dist_xstep,
     this.dist_ymax = dist_ymax;
     this.dist_xstep = dist_xstep;
     this.dist_ystep = dist_ystep;
-    
+
     this.fx = function (c) {
-        return (c * dist_xstep) + dist_xmin;    
+        return (c * dist_xstep) + dist_xmin;
     };
-    
+
     this.fy = function (r) {
-        return ((r+1) * dist_ystep) + dist_ymin;    
+        return ((r+1) * dist_ystep) + dist_ymin;
     };
-    
+
     this.processdata = function (data,xkey,ykey) {
-    
+
         var dist_xmin = this.dist_xmin;
         var dist_xmax = this.dist_xmax;
         var dist_ymin = this.dist_ymin;
@@ -503,7 +503,7 @@ var DISTROBUTION = function (dist_xmin,dist_xmax,dist_ymin,dist_ymax,dist_xstep,
         var dist_xmin = this.dist_xmin;
         var dist_xstep = this.dist_xstep;
         var dist_ystep = this.dist_ystep;
-        
+
         this.ideal_avg = [
                         {"x":20.5,"y":-25},{"x":20.5,"y":-24},{"x":20.6,"y":-23},{"x":20.8,"y":-22},{"x":20.9,"y":-21},
                         {"x":20.8,"y":-20},{"x":20.8,"y":-19},{"x":20.9,"y":-18},{"x":21.1,"y":-17},{"x":21,"y":-16},
@@ -516,181 +516,181 @@ var DISTROBUTION = function (dist_xmin,dist_xmax,dist_ymin,dist_ymax,dist_xstep,
 
         dx = ((dist_xmax-dist_xmin)/dist_xstep) ;
         dy = ((dist_ymax-dist_ymin)/dist_ystep) ;
-        
+
         console.log(dx,dy);
 
         var m = new Array(dy);
-        
+
         var avg = new Array(dy);
         var avg_count = new Array(dy);
         avg.fill(0);
         avg_count.fill(0);
-        
+
         for (var i = 0; i < dy; i++) {
-            m[i] = new Array(dx);  
+            m[i] = new Array(dx);
             m[i].fill(0);
 
         }
 
-        for (var i = 0; i < data.length; i++) 
-        {    
+        for (var i = 0; i < data.length; i++)
+        {
             var xi = Math.floor( (data[i][xkey] - dist_xmin) / dist_xstep ) ;
             var yi = Math.floor( (data[i][ykey] - dist_ymin) / dist_ystep ) ;
-            
-            
+
+
 
             //Check that data is not outside of matrix
             if ( xi >= 0 && xi < dx && yi >= 0 && yi < dy)
             {
-                    
-                    m[yi][xi] = m[yi][xi] +1; 
-                
+
+                    m[yi][xi] = m[yi][xi] +1;
+
                     avg[yi] = avg[yi] + data[i][xkey];
                     avg_count[yi] = avg_count[yi] +1;
-                
+
             }
 
         }
-        
+
         this.avg = [];
         for (var i = 0; i < dy; i++)
         {
-            this.avg[i] = {"x":avg[i]/avg_count[i],"y":this.fy(i)}   
+            this.avg[i] = {"x":avg[i]/avg_count[i],"y":this.fy(i)}
         }
-        
+
         console.log(this.avg);
 
         return m;
 
     }
-    
-    
+
+
     this.linegenerator = d3.svg.line()
                           .x(function(d) { return x(d.x); })
                           .y(function(d) { return y(d.y); })
                           .interpolate("linear");
     this.linegenerator.defined(function(d) { return !isNaN(d.x); });
-    
+
     this.plotpline = function()
     {
-        return this.linegenerator(this.avg);   
+        return this.linegenerator(this.avg);
     }
-    
+
     return this;
-    
+
 };
-    
 
 
-    
-    
+
+
+
 var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
 
 
-    
-    
-    
+
+
+
   // On click, update the x-axis.
   function click() {
-      
+
         var all_data = data2.concat(data3);
-      
-      
+
+
         scene += 1;
         console.log("scene" + scene);
-      
+
         //Scene 1
         if (scene == 1){
-            svg0.selectAll(".hand").transition().duration(500).style("opacity",0);   
+            svg0.selectAll(".hand").transition().duration(500).style("opacity",0);
             svg0.selectAll(".infotext").transition().duration(500).style("opacity",0).text("");
             svg0.selectAll(".infotextbox").transition().duration(500).style("opacity",0);
-            
+
             svg0.selectAll("#termometer")
                 .style("opacity",0)
                 .attr("visibility","visible")
                 .transition().delay(1000).duration(1000).style("opacity",1);
-            
+
             var text = svg0.append("svg:text")
             .attr("x", 380)
             .attr("y", 480)
             .attr("class", "infotext")
             .attr("opacity",0);
             //.style("text-anchor", "end")
-            
+
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 100)
-            .attr('dy', 0)            
+            .attr('dy', 0)
             .text("An Energy Audit is done by comparing");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 110)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("indoor temperature of a building to the");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 120)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("outdoor temperature of a building");
-        
-            
+
+
             text.transition().delay(1800).duration(1000).style("opacity","1");
-            
-            
-    
-            
+
+
+
+
         }
         else if (scene == 2)
         {
             svg0.selectAll(".infotext").transition().delay(20).duration(500).style("opacity",0);
-            
+
             padding.transition().delay(1000).duration(1000).attr("width",0);
             svg.transition().delay(2000).duration(1000).style("opacity",1)
-            
+
             var text = svg0.append("svg:text")
             .attr("x", 0)
             .attr("y", 480)
             .attr("class", "infotext")
             .attr("opacity",0);
             //.style("text-anchor", "end")
-            
+
             ;
-            
+
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 120)
-            .attr('dy', 0)            
+            .attr('dy', 0)
             .text("In the graph to the right outdoor tempera- ");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 130)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("ture is on the vertical axis and indoor  ");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 140)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("temperature on the horizontal axis.")
             text.append('svg:tspan')
             .attr("opacity",0)
             .attr("id","lastline")
             .attr("class", "infotext")
             .attr('x', 112)
-            .attr('dy', 30)            
+            .attr('dy', 30)
             .text("Click the play button to view recorded data.");
             text.transition().delay(3500).duration(1000).style("opacity","1");
-            
+
             svg0.selectAll("#lastline").transition().delay(7000).duration(1000).style("opacity","1");
-                           
+
             var dots = svg.selectAll(".play").transition().delay(1500).style("opacity", "0.6");
-            
+
         }
         else if (scene == 3)
         {
             var dots = svg.selectAll(".play").transition().style("opacity", "0");
-            
+
             svg0.selectAll(".infotext").transition().duration(1000).style("opacity","0");
-            
+
 
             svg.selectAll("circle")
            .data(all_data)
@@ -710,8 +710,8 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
 
 
             var dots = svg.selectAll(".play").transition().style("opacity", "0");
-            
-            
+
+
             //TEXT
             var text = svg0.append("svg:text")
             .attr("x", 0)
@@ -719,70 +719,70 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
             .attr("class", "infotext")
             .attr("opacity",0);
             //.style("text-anchor", "end")
-            
+
             ;
-            
+
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr("id","firstline")
             .attr('x', 30)
-            .attr('dy', 0)            
+            .attr('dy', 0)
             .text("The data plotted consists of more than 14 000 temperature");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 70)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("measurements collected during February - March");
             text.append('svg:tspan')
             .attr("opacity",0)
             .attr("class", "infotext")
             .attr("id","secondline")
             .attr('x', 90)
-            .attr('dy', 30)            
+            .attr('dy', 30)
             .text("A lot of the meassurements where taken")
             text.append('svg:tspan')
             .attr("opacity",0)
             .attr("class", "infotext")
             .attr("id","secondline")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("when the outside temperatrue where around 0°C or -12°C.")
             text.append('svg:tspan')
             .attr("opacity",0)
             .attr("class", "infotext")
             .attr("id","secondline")
             .attr('x', 50)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("To get a better view we need to normalize the data");
             text.append('svg:tspan')
             .attr("opacity",0)
             .attr("class", "infotext")
             .attr("id","thirdline")
             .attr('x', 90)
-            .attr('dy', 40)            
+            .attr('dy', 40)
             .text("Click on the graph to normalize the data!");
-            
-            
+
+
             text.transition().delay(2500).duration(1000).style("opacity","1");
             svg0.selectAll("#secondline").transition().delay(6000).duration(1000).style("opacity","1");
             svg0.selectAll("#thirdline").transition().delay(14000).duration(1000).style("opacity","1");
-            
-        
+
+
         }
-      
-        //Normalization 
+
+        //Normalization
         else if (scene == 4)
         {
             svg.selectAll(".dots").style("opacity","0");
             svg.selectAll(".dots").style("visibility","hidden");
             //svg.selectAll(".dots").transition().delay(500).style("opacity","0");
-            
+
             svg0.selectAll(".infotext").transition().duration(1000).style("opacity","0");
             svg0.selectAll(".infotext").transition().delay(2000).style("visibility","hidden");
-        
+
             var dist = mydist.processdata(all_data,xkey="Vardagsrummet",ykey="Min ute")
             //dist.forEach(function(d){console.log(d);});
-        
+
             dist.forEach(function (d,i) {
 
 
@@ -801,7 +801,7 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 .attr("x", function(d,i) {
                 return x(mydist.fx(i));})
                 .attr("y", py)
-                .attr("width", x(mydist.dist_xstep)-x(0) )  
+                .attr("width", x(mydist.dist_xstep)-x(0) )
                 .attr("height", y(0)-y(mydist.dist_ystep) )
                 .attr("opacity",function(d) {
                 return d/smax;})
@@ -816,12 +816,12 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 .attr("stroke", "blue")
                 .attr("stroke-width", 2)
                 .attr("fill", "none");
-        
-            
+
+
         //2
         var dist2 = mydist.processdata(all_data,xkey="Toan",ykey="Min ute")
             //dist.forEach(function(d){console.log(d);});
-        
+
             dist2.forEach(function (d,i) {
 
 
@@ -840,7 +840,7 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 .attr("x", function(d,i) {
                 return x(mydist.fx(i));})
                 .attr("y", py)
-                .attr("width", x(mydist.dist_xstep)-x(0) )  
+                .attr("width", x(mydist.dist_xstep)-x(0) )
                 .attr("height", y(0)-y(mydist.dist_ystep) )
                 .attr("opacity",function(d) {
                 return d/smax;})
@@ -857,12 +857,12 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 .attr("stroke-width", 2)
                 .attr("fill", "none")
             .style("visibility","hidden");
-            
-            
+
+
         //3
         var dist2 = mydist.processdata(all_data,xkey="Sovrummet",ykey="Min ute")
             //dist.forEach(function(d){console.log(d);});
-        
+
             dist2.forEach(function (d,i) {
 
 
@@ -881,7 +881,7 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 .attr("x", function(d,i) {
                 return x(mydist.fx(i));})
                 .attr("y", py)
-                .attr("width", x(mydist.dist_xstep)-x(0) )  
+                .attr("width", x(mydist.dist_xstep)-x(0) )
                 .attr("height", y(0)-y(mydist.dist_ystep) )
                 .attr("opacity",function(d) {
                 return d/smax;})
@@ -898,172 +898,172 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 .attr("stroke-width", 2)
                 .attr("fill", "none")
             .style("visibility","hidden");
-            
-            
+
+
         //TEXT
-        
+
         var text = svg0.append("svg:text")
             .attr("x", 0)
             .attr("y", 480)
             .attr("class", "infotext")
             .attr("opacity",0);
             //.style("text-anchor", "end")
-            
-         
-            
+
+
+
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr("id","firstline")
             .attr('x', 30)
-            .attr('dy', 0)            
+            .attr('dy', 0)
             .text("Normalized data shows the");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr("id","firstline")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("average and the distrobution");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr("id","firstline")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("of readings instead of the actual");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr("id","firstline")
             .attr('x', 30)
-            .attr('dy', 20)            
-            .text("meter points."); 
+            .attr('dy', 20)
+            .text("meter points.");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr("id","firstline")
             .attr('x', 30)
-            .attr('dy', 30)            
+            .attr('dy', 30)
             .text("There needs to be");
             text.append('svg:tspan')
             .attr("class", "infotext")
-            
+
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("enough points collected at each");
             text.append('svg:tspan')
             .attr("class", "infotext")
-            
+
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("outdoor temperatre intervall");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("in order for us to see how");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("the systems works at that temperature.");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("In this example there is no data for");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("temperatures above 7°C");
-    
+
         text.transition().delay(500).duration(1000).style("opacity","1");
-        
+
     }
-     //Scene 5 a good system 
+     //Scene 5 a good system
         else if (scene == 5)
         {
             svg0.selectAll(".infotext").transition().duration(1000).style("opacity","0");
             svg0.selectAll(".infotext").transition().delay(2000).style("visibility","hidden");
-            
+
             var text = svg0.append("svg:text")
             .attr("x", 0)
             .attr("y", 480)
             .attr("class", "infotext")
             .attr("opacity",0);
             //.style("text-anchor", "end")
-            
+
             ;
-            
+
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr("id","firstline")
             .attr('x', 30)
-            .attr('dy', 0)            
+            .attr('dy', 0)
             .text("In well adjusted heatng system the indoor temperature");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("will be the same regardless of out door temperature.");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("However some variation will always occur.");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("Typically there is a big variation in the range 0-4°C");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("Since otherparameters such as humidity and wind varies a lot");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("in this intervall. ");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr("id","firstline")
             .attr('x', 30)
-            .attr('dy', 30)            
+            .attr('dy', 30)
             .text("In well adjusted heatng system the temperature");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("from different appertments or different rooms");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("in an appartment will also be the same.");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("in the next step you will be able to select");
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr('x', 30)
-            .attr('dy', 20)            
+            .attr('dy', 20)
             .text("data form multiple appartments.");
-            
+
             text.transition().delay(500).duration(1000).style("opacity","1");
-            
+
             //svg.selectAll(".distro").transition().duration(1000).style("opacity","0");
             //svg.selectAll(".avg").transition().duration(1000).style("opacity","0");
-            
+
             var path1 = svg.append("path")
                 .attr("d", mydist.linegenerator(mydist.ideal_avg))
                 .attr("class", "ideal_dist")
                 .attr("stroke", "orange")
-                .attr("stroke-width", 20)   
+                .attr("stroke-width", 20)
                 .attr("opacity", 0.5)
                 //.style("opacity", 0)
                 .attr("fill", "none");
-            
+
             var path2 = svg.append("path")
                 .attr("d", mydist.linegenerator(mydist.ideal_avg))
                 .attr("class", "ideal_avg")
@@ -1072,16 +1072,16 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 //.attr("opacity", 0)
                 //.style("opacity", 0)
                 .attr("fill", "none");
-            
-            
+
+
             path1.transition()
                 .delay(1000).duration(1000).style("opacity", 0.5);
-            
+
             path2.transition()
                 .delay(1000).duration(1000).style("opacity", 1);
-            
+
             var totalLength1 = path1.node().getTotalLength();
-        
+
 
             path1
               .attr("stroke-dasharray", totalLength1 + " " + totalLength1)
@@ -1090,9 +1090,9 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 .duration(2000)
                 .ease("linear")
                 .attr("stroke-dashoffset", 0);
-            
+
             var totalLength2 = path2.node().getTotalLength();
-            
+
             path2
               .attr("stroke-dasharray", totalLength2 + " " + totalLength2)
               .attr("stroke-dashoffset", totalLength2)
@@ -1100,47 +1100,47 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 .duration(2000)
                 .ease("linear")
                 .attr("stroke-dashoffset", 0);
-            
-            
-            
-            
-        
+
+
+
+
+
         }
-      
-        //Multi select. 
+
+        //Multi select.
         else if (scene == 6)
         {
             svg0.selectAll(".infotext ").transition().duration(1000).style("opacity","0");
             svg0.selectAll(".infotext").transition().delay(2000).style("visibility","hidden");
-            
+
             svg0.selectAll("#termometer")
                 .transition().delay(500).duration(1000).style("opacity",0);
-            
-            
+
+
             svg.selectAll(".ideal_dist").transition().duration(1000).style("opacity","0").style("visibility","hidden");
             svg.selectAll(".ideal_avg").transition().duration(1000).style("opacity","0").style("visibility","hidden");
-            
-            
+
+
             var text = svg0.append("svg:text")
             .attr("x", 0)
             .attr("y", 480)
             .attr("class", "infotext")
             .attr("opacity",0);
             //.style("text-anchor", "end")
-            
-           
-            
+
+
+
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr("id","firstline")
             .attr('x', 40)
-            .attr('dy', 0)            
+            .attr('dy', 0)
             .text("Click on the windows of the house to select data series.");
-            
+
             text.transition().delay(500).duration(1000).style("opacity","1");
-            
-            
-            
+
+
+
             var rectangle = svg0.append("rect")
                              .attr("x", 200)
                              .attr("y", 200)
@@ -1148,7 +1148,7 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                              .attr("height", 200)
                              .attr("fill", "black")
                             .attr("opacity",0);
-            
+
             var rectangle2 = svg0.append("rect")
                              .attr("x", 260)
                              .attr("y", 350)
@@ -1156,11 +1156,11 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                              .attr("height", 50)
                              .attr("fill", "white")
                             .attr("opacity",0);
-            
-            
-            
+
+
+
             var datasets2 = [{"dist":svg.selectAll(".distrob"),"avg":svg.selectAll(".avgb")},{"dist":svg.selectAll(".distro"),"avg":svg.selectAll(".avg")},{"dist":svg.selectAll(".distroc"),"avg":svg.selectAll(".avgc")},3,4,5,6,7,8];
-            
+
             var windows = svg0.selectAll(".win").data(datasets2)
                 .enter().append("rect")
                              .attr("x", function(d,i) {return 213 + ((i%3)*45);})
@@ -1187,77 +1187,77 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                                         }
                                 }
                             });
-            
-            
+
+
             rectangle.transition().delay(1500).duration(1000).style("opacity","1");
             rectangle2.transition().delay(1500).duration(100).style("opacity","1");
             windows.transition().delay(1500).duration(100).style("opacity","1");
-            
+
             svg.selectAll(".distro").transition().duration(1000).style("visibility","hidden");
             svg.selectAll(".avg").transition().duration(1000).style("opacity","0");
-            
-            
-        }  
+
+
+        }
         else if (scene == 7)
         {
             svg0.selectAll(".infotext").transition().duration(1000).style("opacity","0");
             svg0.selectAll(".infotext").transition().delay(2000).style("visibility","hidden");
-            
+
             var text = svg0.append("svg:text")
             .attr("x", 0)
             .attr("y", 480)
             .attr("class", "infotext")
             .attr("opacity",0);
             //.style("text-anchor", "end")
-            
+
             text.append('svg:tspan')
             .attr("class", "infotext")
             .attr("id","firstline")
             .attr('x', 30)
-            .attr('dy', 0)            
+            .attr('dy', 0)
             .text("TODO: ANALYSIS TOOLS");
-            
+
             text.transition().delay(500).duration(1000).style("opacity","1");
         }
-      
+
         else if (scene == 8)
         {
             svg.selectAll(".dots").transition().duration(100).ease("cubic").style("opacity","0.01");
-        } 
-      
-        
+        }
+
+
       else if (scene == 9)
       {
            svg.selectAll(".dots").style("opacity","0.01");
-           svg.selectAll(".distro").attr("visibility", "hidden");     
+           svg.selectAll(".distro").attr("visibility", "hidden");
       }
       else if (scene == 10)
       {
           svg.selectAll(".dots").style("opacity","0");
-        svg.selectAll(".distro").attr("visibility", "visible"); 
-          
+        svg.selectAll(".distro").attr("visibility", "visible");
+
           //Add tools
           //svg2.attr("visibility","visible");
-          
+
           var panel = d3.xml("Sidpanel.svg", "image/svg+xml", function(error, xml) {
                 if (error) throw error;
                 console.log(xml.documentElement);
                 xml.width = 100;
                 document.body.appendChild(xml.documentElement);
             });
-          
+
           scene = 9;
       }
-      
+
       else {
         svg.append("circle")
         .attr("cx", width/2)
         .attr("cy", height /2)
         .attr("r", 50);
-        
+
         scene = 0;
     }
-      
+
   }
 });
 
@@ -1267,16 +1267,9 @@ function type(d) {
   d.price = +d.price;
   return d;
 }
-    
 
 
-    
- 
+
+
+
 </script>
-    
-    
-
-
-    
-    
- 
