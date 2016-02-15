@@ -1228,11 +1228,9 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
 
       else if (scene == 9)
       {
-           svg.selectAll(".dots").style("opacity","0.01");
-           svg.selectAll(".distro").attr("visibility", "hidden");
-      }
-      else if (scene == 10)
-      {
+           //svg.selectAll(".dots").style("opacity","0.01");
+           //svg.selectAll(".distro").attr("visibility", "hidden");
+          
           svg.selectAll(".dots").style("opacity","0");
         svg.selectAll(".distro").attr("visibility", "visible");
 
@@ -1245,6 +1243,10 @@ var mydist = DISTROBUTION(17.5,24.5,-25,25,0.25,0.5);
                 xml.width = 100;
                 document.body.appendChild(xml.documentElement);
             });
+      }
+      else if (scene == 10)
+      {
+          
 
           scene = 9;
       }
