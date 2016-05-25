@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, user-scalable=no,
+		shrink-to-fit=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+
+	<title>CAPE - Energy audit</title>
+
+	<style>
+		@import 'ui/css/evothings-app.css';
+		#main {
+
+			height: 75vh;
+
+		}
+
+		#menu {
+
+			height: 12vh;
+		}
+
+		.test_d{
+			border:dashed red 1px;
+		}
+
+		#topbar {
+			background-color: #FEA147;
+		}
+		.description {
+			font-size: 3vh;
+		}
+
+		.checklist {
+			
+			padding-top: 3vh;
+			padding-bottom: 3vh;
+			padding-left: 7vw;
+		}
+
+		#more_btn {
+
+			padding-top: 5vh;
+		}
+	</style>
+
+	<script>
+	// Redirect console.log to Evothings Workbench.
+	if (window.hyper && window.hyper.log) { console.log = hyper.log }
+	</script>
+
+</head>
+
+<body ontouchstart=""><!-- ontouchstart="" enables low-delay CSS transitions. -->
+
+	<header id="topbar">
+		<button class="back" onclick="history.back()">
+			<img src="ui/images/arrow-left.svg" />
+		</button>
+
+		<img class="logotype" src="svg/logo.svg" alt="Evothings" />
+
+		<!--<button class="menu" onclick=""><img src="ui/images/menu.svg" /></button>-->
+	</header>
+
+
+
+	<script src="cordova.js"></script>
+	<script src="libs/evothings/evothings.js"></script>
+	<script src="libs/evothings/ui/ui.js"></script>
+	<!-- TODO: Add libraries that you need -->
+
+
+	<div id="main" class="test"> 
+		<div id="CAPE">
+			<h1>CAPE - Energy Audit</h1>
+			<div class="description" >The cape tool provide you with five steps to increase comfort and energy efficiency in you building. <p>
+			</div>
+			<div class="description checklist" >
+			<div><b>1. Messure you building</b></div>
+			<div>2. Balance your system</div>
+			<div>3. Ajdust temperature curve</div>
+			<div>4. Check ventilation</div>
+			<div>5. Apply extra insulation</div>
+			</div>
+			<div class="description" >In this APP you will be able to preform the first step i.e. messure your building to find out its condition in terms of the heating system.</div>
+
+			<P>
+			<div id="more_btn">
+			<center>GET STARTED 
+				<svg version="1.0" id="Layer_1" width="1.5%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				 viewBox="0 0 20.2 91.5" enable-background="new 0 0 20.2 91.5" xml:space="preserve">
+			<polygon points="0,91.5 20.2,45.8 0,0 15.2,45.8 "/>
+			</svg> </center>
+			</div>
+
+		</div>
+
+	</div>
+	<div id="menu" class="test">
+		<object height="100%" type="image/svg+xml" data="svg/about.svg" onclick="history.back()"> </object>
+		<object height="100%" type="image/svg+xml" data="svg/sensor_btn.svg"> </object>
+		<object height="100%" type="image/svg+xml" data="svg/termometer.svg"> </object>
+
+	 </div>
+
+</body>
+
+</html>
