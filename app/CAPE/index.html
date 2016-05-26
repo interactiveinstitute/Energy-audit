@@ -20,9 +20,10 @@
 		#menu {
 
 			height: 12vh;
+			margin-left: 1vw;
 		}
 
-		.test_d{
+		.test{
 			border:dashed red 1px;
 		}
 
@@ -44,6 +45,33 @@
 
 			padding-top: 5vh;
 		}
+		.button {
+			display:inline-block; 
+			width: 10.5vh; 
+			height: 10.5vh;
+			border: solid black 0.3vh;
+			border-radius: 1vh;
+			background-color: white;
+		}
+		.button:active {
+			background-color: black;
+		}
+
+		#sensor_pic {
+			width: 50vh;
+			height: 50vh;
+			margin-left: calc(42.7vw - 25vh);
+		}
+		#sensorview_fill {
+			height: 10vh;
+		}
+
+		#zzz{
+			height: 10vh;
+			width: 14vh;
+			float:right;
+		}
+
 	</style>
 
 	<script>
@@ -73,8 +101,8 @@
 	<!-- TODO: Add libraries that you need -->
 
 
-	<div id="main" class="test"> 
-		<div id="CAPE">
+	<div id="main" > 
+		<div id="CAPE" class="view"> 
 			<h1>CAPE - Energy Audit</h1>
 			<div class="description" >The cape tool provide you with five steps to increase comfort and energy efficiency in you building. <p>
 			</div>
@@ -88,7 +116,7 @@
 			<div class="description" >In this APP you will be able to preform the first step i.e. messure your building to find out its condition in terms of the heating system.</div>
 
 			<P>
-			<div id="more_btn">
+			<div id="more_btn" onclick="console.log('more')">
 			<center>GET STARTED 
 				<svg version="1.0" id="Layer_1" width="1.5%" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 				 viewBox="0 0 20.2 91.5" enable-background="new 0 0 20.2 91.5" xml:space="preserve">
@@ -98,13 +126,52 @@
 
 		</div>
 
+		<div id="SENSOR" class="view" >
+
+			<div class="description" id="sensorview_fill"></div>
+			<div id="zzz" class="" style="background-image: url(svg/snor.svg);" > </div>
+			<div id="sensor_pic" class="" style="background-image: url(svg/sensor_btn.svg);  " onclick="select_view(0)">
+			</div>
+			<div class="description" ><center>Click the button on you sensor to wake it up!</center></div>
+
+
+		</div>
+
 	</div>
-	<div id="menu" class="test">
-		<object height="100%" type="image/svg+xml" data="svg/about.svg" onclick="history.back()"> </object>
-		<object height="100%" type="image/svg+xml" data="svg/sensor_btn.svg"> </object>
-		<object height="100%" type="image/svg+xml" data="svg/termometer.svg"> </object>
+	<div id="menu" >
+		<div class="button" style="background-image: url(svg/about.svg);  " onclick="select_view(0)"></div>
+		<div class="button" style="background-image: url(svg/sensor_btn.svg);  " onclick="select_view(1)"></div>
+		<div class="button" style="background-image: url(svg/termometer.svg);  " onclick="select_view(2)"></div>
+		<div class="button" style="background-image: url(svg/Summary.svg);  " onclick="select_view(3)"></div>
+
+		
 
 	 </div>
+
+
+	 <script>
+
+	 	function select_view(n) {
+	 		views = document.getElementsByClassName	("view")
+
+	 		for (var f=0;f < views.length; f++) {
+
+	 			if (f != n) {
+		 			views[f].style.visibility = "hidden";
+		 			views[f].style.display = "none";
+		 		} else 
+		 		{
+		 			views[f].style.visibility = "visible";
+		 			views[f].style.display = "block";
+		 		}
+
+	 		}
+	 	}
+
+	 	select_view(0);
+
+
+	 </script>
 
 </body>
 
