@@ -3,10 +3,35 @@
 <svg version="1.0" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 131.5 131.5" enable-background="new 0 0 131.5 131.5" xml:space="preserve">
 <g>
-	<g>
-		<path fill="#F9A04A" d="M65.9,113.3c0,0,31.9-27.4,31.9-57c0-28.5-19-38.2-31.9-38.2S34,27.7,34,56.2
+	<g id="whole_sensor">
+		<path id="sensor_body" fill="#F9A04A" d="M65.9,113.3c0,0,31.9-27.4,31.9-57c0-28.5-19-38.2-31.9-38.2S34,27.7,34,56.2
 			C34,85.8,65.9,113.3,65.9,113.3z"/>
-		<circle fill="#E6E6E5" cx="65.8" cy="53.3" r="15.3"/>
+		<circle id="sensor_btn" fill="#E6E6E5" cx="65.8" cy="53.3" r="15.3"/>
 	</g>
 </g>
+
+	<style>
+
+		#whole_sensor:sleep_mode {
+		  		animation: sleep 8s ease infinite;
+		  		transform-origin: 50% 50%;
+			}
+
+			@keyframes sleep {
+				0% {transform: scaleX(1) scaleY(1);}
+			    10%   {transform: scale(0.95);}  
+			    20%  {transform: scale(1.00);} 
+			    25%  {transform: scale(1.00);} 
+			    50%  {transform: scale(0.90);} 
+			    60%  {transform: scale(1.00);}
+			    65%  {transform: scale(1.00);} 
+			    85% {transform: scale(0.90);}
+			    95% {transform: scale(1);}
+
+			}
+
+	</style>
+
+
 </svg>
+
