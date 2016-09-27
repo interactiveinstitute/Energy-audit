@@ -1,2 +1,2 @@
-SSID = "SecureNet"
-PASSWORD = "hemli&kluri!?!?!"
+SSID = "Interactive Institute"
+PASSWORD = "Interact!v1ty" 
