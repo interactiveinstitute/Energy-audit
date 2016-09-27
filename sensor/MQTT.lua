@@ -2,23 +2,25 @@ clientid = wifi.sta.getmac()
 server = "op-en.se"
 cmd_ch = "test/cape/" .. wifi.sta.getmac() .. ""
 
+if (m ~= nil) then
+    m:close()
+end
+
 connected = false
+
 
 
 m = mqtt.Client(clientid, 30)
 
-
-m:on("connect", function(con)
-    print ("MQTT connected")
-    connected = true
-
-end)
-m:on("offline", function(con)
-
+function handle_disconnect(con)
     print ("MQTT disconnected")
     connected = false
     MQTTConnect()
-end)
+end
+
+m:on("offline", handle_disconnect)
+
+
 
 -- on receive message
 m:on("message", function(conn, topic, data)
@@ -42,7 +44,7 @@ function MQTTConnect()
     
     m:connect(server, 1883, 0, function(conn)
       print("MQTT connected")
-      --connected = true
+      connected = true
       -- subscribe topic with qos = 0
       m:subscribe(cmd_ch .. "/cmd",0, function(conn)
         -- publish a message with data = my_message, QoS = 0, retain = 0
@@ -53,13 +55,13 @@ function MQTTConnect()
      end)
  end
 
- wifi.sta.eventMonReg(wifi.STA_GOTIP, function() 
- 
+wifi.sta.eventMonReg(wifi.STA_GOTIP, function() 
     print("STATION_GOT_IP") 
     MQTTConnect()
- end)
+end)
  
 
 
 print("Connecting to MQTT")
+
 MQTTConnect()

@@ -1,6 +1,6 @@
 -- load credentials, 'SSID' and 'PASSWORD' declared and initialize in there
 dofile("credentials.lua")
-
+   
 function startup()
     if file.open("init.lua") == nil then
         print("init.lua deleted or renamed")
@@ -11,7 +11,7 @@ function startup()
 
         --dofile("pulse_detector.lua")
         --dofile("tcp-ota.lua")
-        dofile("cape.lua")
+        --dofile("cape.lua")
 
 
     end
