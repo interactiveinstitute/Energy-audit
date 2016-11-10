@@ -11,7 +11,8 @@ function startup()
 
         --dofile("pulse_detector.lua")
         --dofile("tcp-ota.lua")
-        --dofile("cape.lua")
+        dofile("tcp-ota.lua");
+        dofile("CAPEv2.lua")
 
 
     end
